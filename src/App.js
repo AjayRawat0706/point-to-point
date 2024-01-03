@@ -1,25 +1,32 @@
-import logo from './logo.svg';
+import React, {useEffect, useState } from 'react'
 import './App.css';
 
 function App() {
+  const [news, setNews]=useState([])
+  const updateNews=async ()=> {
+    const url=`https://gnews.io/api/v4/top-headlines?category=general&apikey=fa218fbf07cc9735c465e5b13024db41`
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    console.log(parsedData);
+    setNews(parsedData.articles);
+   
+  }
+  useEffect(()=>{
+    updateNews();
+    // console.log(news)
+  },[])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      hello
+      {
+        news.map((e)=>{
+          return <div> {e.title}</div>
+        })
+      }
     </div>
   );
 }
 
 export default App;
+
+
